@@ -127,7 +127,7 @@ static int UpdateBootImage(char *imgBase, size_t imgSize, char *blockLocation)
 
 static int updateEMMCCommon(int offset,char *imgBase, size_t imgSize)
 {
-    int ret = update_sd_from_mem("/dev/block/platform/dw_mmc.2/mmcblk1", offset, imgBase, imgSize);
+    int ret = update_sd_from_mem("/dev/block/platform/dw_mmc.1/mmcblk1", offset, imgBase, imgSize);
     if (ret < 0)
         ret = update_sd_from_mem("/dev/block/platform/dw_mmc.2/mmcblk0", offset, imgBase, imgSize);
     return ret;
