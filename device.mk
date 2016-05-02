@@ -357,7 +357,7 @@ PRODUCT_PACKAGES += \
 
 # set default USB configuration
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-	persist.sys.usb.config=mtp
+	persist.sys.usb.config=adb
 
 # ota updater test
 #PRODUCT_PACKAGES += \
