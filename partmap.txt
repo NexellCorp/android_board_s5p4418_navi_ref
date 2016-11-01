@@ -8,3 +8,4 @@ flash=mmc,0:bootloader:boot:0x8000,0x77000;
 flash=mmc,0:boot:ext4:0x00100000,0x04000000;
 flash=mmc,0:system:ext4:0x04100000,0x2F200000;
 flash=mmc,0:root:ext4:0x33300000,0x0;
+
