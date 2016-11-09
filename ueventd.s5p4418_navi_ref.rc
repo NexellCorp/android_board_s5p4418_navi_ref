@@ -14,7 +14,12 @@
 /dev/ttyAMA4		0666	system	system
 
 #mtv818
-/dev/mtv350		0666	system	system
+/dev/mtv350     0666    system  system
+/dev/nxb110    0666    system  system
+/dev/nxb110_tdmb_pri    0666    system  system
+/dev/nxb110_1seg        0666    system  system
+/dev/nxb220             0666    system  system
+/dev/nxp-mpegtsi        0666    system  system
 
 # v4l2
 /dev/media0               0666   system     system
