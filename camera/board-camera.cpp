@@ -1,4 +1,3 @@
-
 #define LOG_TAG "NXCameraBoardSensor"
 
 #include <linux/videodev2.h>
@@ -22,7 +21,7 @@
 #include <DS90UB914Q.h>
 #endif
 
-//#include <TW9992.h>
+/*	#include <TW9992.h>	*/
 
 namespace android {
 
@@ -40,7 +39,7 @@ NXCameraBoardSensor *get_board_camera_sensor(int id) {
 
     if (id == 0) {
         if (!backSensor) {
-#if (BACK_CAMERA == DECODER_TW9900)				
+#if (BACK_CAMERA == DECODER_TW9900)
             backSensor = new TW9900(nxp_v4l2_sensor0);
 #elif (BACK_CAMERA == AHD_NVP6114A)
             backSensor = new NVP6114A(nxp_v4l2_sensor0);
@@ -76,7 +75,7 @@ NXCameraBoardSensor *get_board_camera_sensor_by_v4l2_id(int v4l2_id) {
         return backSensor;
     case nxp_v4l2_sensor1:
         return frontSensor;
-    default: 
+    default:
         ALOGE("%s: invalid v4l2 id(%d)", __func__, v4l2_id);
         return NULL;
     }
@@ -84,17 +83,32 @@ NXCameraBoardSensor *get_board_camera_sensor_by_v4l2_id(int v4l2_id) {
 
 uint32_t get_board_preview_v4l2_id(int cameraId)
 {
-    switch (cameraId) {
-    case 0:
-        //return nxp_v4l2_decimator0;
-        return nxp_v4l2_clipper0;
-    case 1:
-        //return nxp_v4l2_decimator1;
-        return nxp_v4l2_clipper1;
-    default:
-        ALOGE("%s: invalid cameraId %d", __func__, cameraId);
-        return 0;
-    }
+	bool interlace;
+	int width;
+
+	switch (cameraId) {
+	case 0:
+		interlace = backSensor->isInterlace();
+		width = backSensor->Width;
+
+		if (interlace || (width % 128) != 0)
+			return nxp_v4l2_clipper0;
+		else
+			return nxp_v4l2_decimator0;
+	case 1:
+#if 0
+		interlace = frontSensor->isInterlace();
+		width = frontSensor->Width;
+
+		if (interlace || (width % 128) != 0)
+			return nxp_v4l2_clipper1;
+		else
+			return nxp_v4l2_decimator1;
+#endif
+	default:
+		ALOGE("%s: invalid cameraId %d", __func__, cameraId);
+		return 0;
+	}
 }
 
 uint32_t get_board_capture_v4l2_id(int cameraId)
